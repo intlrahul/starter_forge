@@ -29,7 +29,6 @@ class AppTheme {
             Colors.transparent, // Or use colorScheme.surfaceContainer
         foregroundColor: baseLight.colorScheme.onSurface,
         titleTextStyle: GoogleFonts.lato(
-          // Or _fontFamily
           fontSize: 20,
           fontWeight: FontWeight.w600,
           color: baseLight.colorScheme.onSurface,

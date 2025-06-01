@@ -21,14 +21,10 @@ class _HomeScreenContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
       appBar: AppBar(
         title: Icon(Icons.water_damage_sharp),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        foregroundColor: colorScheme.onSurface, // Ensures text is visible
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications_none_outlined),
@@ -67,8 +63,6 @@ class _HomeScreenContent extends StatelessWidget {
               title: 'View Report #123',
               subtitle: 'Access details and user information',
               onTap: () => context.go('/details/123'),
-              colorScheme: colorScheme,
-              isDarkMode: isDarkMode,
             ),
             _buildActionItem(
               context,
@@ -76,8 +70,6 @@ class _HomeScreenContent extends StatelessWidget {
               title: 'Manage Document #456',
               subtitle: 'Review and update user data',
               onTap: () => context.go('/details/456'),
-              colorScheme: colorScheme,
-              isDarkMode: isDarkMode,
             ),
             // Add more ActionItems or other sections like charts, recent activity, etc.
             // Example:
@@ -86,12 +78,6 @@ class _HomeScreenContent extends StatelessWidget {
             const SizedBox(height: 12),
             Card(
               elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0),
-                side: BorderSide(
-                  color: colorScheme.outlineVariant.withValues(alpha: 0.5),
-                ),
-              ),
               child: Container(
                 height: 150,
                 padding: const EdgeInsets.all(16.0),
@@ -171,14 +157,6 @@ class _HomeScreenContent extends StatelessWidget {
   ) {
     return Card(
       elevation: 0.5, // Subtle elevation
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0), // More rounded
-        // Use outline for a more subtle card in light mode, or if preferred
-        side: BorderSide(
-          color: colorScheme.outlineVariant.withValues(alpha: 0.3),
-        ),
-      ),
-      color: colorScheme.surfaceContainerLowest, // M3 surface color
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
         child: Row(
@@ -242,19 +220,11 @@ class _HomeScreenContent extends StatelessWidget {
     required String title,
     required String subtitle,
     required VoidCallback onTap,
-    required ColorScheme colorScheme,
-    required bool isDarkMode,
   }) {
     return Card(
       elevation: 0, // Flat design for list items
       margin: const EdgeInsets.symmetric(vertical: 6.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-        side: BorderSide(
-          color: colorScheme.outlineVariant.withValues(alpha: 0.4),
-        ),
-      ),
-      color: colorScheme.surface, // Or surfaceContainer for subtle difference
+
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12.0), // Match card's border radius
@@ -264,13 +234,7 @@ class _HomeScreenContent extends StatelessWidget {
             children: <Widget>[
               Container(
                 padding: const EdgeInsets.all(10.0),
-                decoration: BoxDecoration(
-                  color: colorScheme.primaryContainer.withValues(
-                    alpha: isDarkMode ? 0.3 : 0.15,
-                  ),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Icon(icon, size: 22, color: colorScheme.primary),
+                child: Icon(icon, size: 22),
               ),
               const SizedBox(width: 16),
               Expanded(
@@ -288,19 +252,14 @@ class _HomeScreenContent extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       subtitle,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
+                      style: Theme.of(context).textTheme.bodySmall,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
               ),
-              Icon(
-                Icons.chevron_right,
-                color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
-              ),
+              Icon(Icons.chevron_right),
             ],
           ),
         ),

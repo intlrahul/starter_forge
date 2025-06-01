@@ -27,15 +27,7 @@ class _ProfileView extends StatelessWidget {
     final isDarkMode = context.watch<ThemeBloc>().state.isDarkMode;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'My Profile',
-          style: textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w600),
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        foregroundColor: colorScheme.onSurface,
-      ),
+      appBar: AppBar(title: Text('My Profile')),
       body: BlocConsumer<ProfileBloc, ProfileState>(
         // Use aliased state
         listener: (context, state) {
