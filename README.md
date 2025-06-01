@@ -27,46 +27,48 @@ A Flutter starter project designed to provide a solid foundation for building sc
     git clone git@github.com:intlrahul/starter_forge.git cd starter_forge
 
 2.  **Get dependencies:**
+    ```bash
     flutter pub get
 
 3. **(If using generated code, e.g., for mocks) Run build_runner:**
-   flutter pub run build_runner build --delete-conflicting-outputs
+   ```bash
+    flutter pub run build_runner build --delete-conflicting-outputs
 
 4. **Run the app:**
+    ```bash
    flutter run
 
 5. ## 📁 Project Structure
 
 The project follows a feature-first approach:
 
-lib/ 
-├── app/                  # App-level setup(main, router, service_locator)
-├── core/                 # Shared core functionalities (theme, navigation utils) 
-├── features/             # Individual application features 
-│   
-├── counter/ 
-│   
-│   
-├── data/ 
-│   
-│   
-├── domain/ 
-│   
-│   
-└── presentation/ # (Screens, BLoCs/Cubits, widgets) 
-│   
-├── profile/ 
-│   
-└── user_details/ 
+lib/<br>
+├── app/ # App-level setup (main entry, router, service locator)<br>
+├── core/ # Shared core functionalities (theme, navigation utils, etc.)<br>
+├── features/ # Individual application features<br>
+│ ├── dashboard/ # Counter feature<br>
+│ │ ├── data/ # Data layer (e.g., API calls, repositories)<br>
+│ │ ├── domain/ # Domain layer (e.g., models, use cases)<br>
+│ │ └── presentation/ # UI layer (screens, widgets, BLoCs/Cubits)<br>
+│ ├── profile/ # Profile feature<br>
+│ │ ├── data/<br>
+│ │ ├── domain/<br>
+│ │ └── presentation/<br>
+│ ├── user_details/ # User Details feature<br>
+│ │ ├── data/<br>
+│ │ ├── domain/<br>
+│ │ └── presentation/<br>
+
 
 ## 🧪 Running Tests
 
 *   **Run all tests:**
-flutter test
+    ```bash
+    flutter test
 
 *   **Generate code coverage:**
-
-flutter test --coverage # To view HTML report (requires lcov): # genhtml coverage/lcov.info -o coverage/html && open coverage/html/index.html
+    ```bash
+    flutter test --coverage # To view HTML report (requires lcov): # genhtml coverage/lcov.info -o coverage/html && open coverage/html/index.html
 
 ## 🛠️ Key Technologies & Packages
 
