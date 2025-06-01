@@ -1,0 +1,50 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - "**.mocks.dart"
+    - "**.freezed.dart"
+    - "**.g.dart"
+    # - "lib/generated/**" # If you have a specific top-level generated code folder
+
+linter:
+  rules:
+    prefer_single_quotes: true
+    always_specify_types: false
+    avoid_dynamic_calls: true # Can be noisy but promotes type safety
+    avoid_empty_else: true
+    avoid_returning_null_for_future: true
+    avoid_slow_async_io: true
+    avoid_type_to_string: true # Often indicates a logic error
+    cancel_subscriptions: true # Good for managing StreamSubscriptions
+    close_sinks: true # Good for managing Sinks
+    directives_ordering: true
+    no_adjacent_strings_in_list: true
+    no_logic_in_create_state: true
+    prefer_final_fields: true
+    prefer_final_in_for_each: true
+    prefer_final_locals: true
+    prefer_interpolation_to_compose_strings: true
+    unnecessary_await_in_return: true
+    unnecessary_lambdas: true
+    unnecessary_parenthesis: true
+    unnecessary_statements: true
+    avoid_classes_with_only_static_members: false
+    avoid_js_rounded_ints: false
+    avoid_positional_boolean_parameters: true
+    avoid_setters_without_getters: true
+    flutter_style_todos: true
+    lines_longer_than_80_chars: false
+    parameter_assignments: true
+    prefer_asserts_in_initializer_lists: true
+    prefer_constructors_over_static_methods: false
+    prefer_expression_function_bodies: false # Can be good for conciseness
+    prefer_mixin: false # Use mixins where appropriate, not a strict preference
+    sort_constructors_first: true
+    sort_unnamed_constructors_first: true
+    test_types_in_equals: true
+    throw_in_finally: false # Covered by control_flow_in_finally
+    use_enums: true # Promotes enums over plain strings/ints for sets of choices
+    use_late_for_private_fields_and_variables: false # Debatable, depends on null safety strategy
+    use_setters_to_change_properties: false # Depends on state management pattern
+

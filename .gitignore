@@ -1,0 +1,147 @@
+gitignore
+# Flutter/Dart/Pub related
+# Ignore files and directories created by pub
+.dart_tool/
+.packages
+.pub-cache/
+build/
+# If you generate localization/other code into lib/generated and don't commit
+# lib/generated/
+# Generated plugin registrant for some platforms
+lib/generated_plugin_registrant.dart
+# IntelliJ and Android Studio
+.idea/
+*.iml
+*.ipr
+*.iws
+# Android Studio
+# captures/ # Moved to Android specific section
+# local.properties # Moved to Android specific section
+
+# VS Code
+.vscode/ # Common to ignore user-specific VS Code settings, but launch/tasks.json can be committed.
+# If you commit .vscode/launch.json or .vscode/tasks.json, consider:
+# .vscode/*
+# !.vscode/launch.json
+# !.vscode/tasks.json
+
+# Log files
+*.log
+logs/
+
+# Secrets & Environment Variables (critical to ignore actual secrets)
+.env
+.env.*
+secrets.json # Example for a generic secrets file
+# Commit templates/examples for .env files
+!*.env.example
+!*.env.template
+
+# iOS specific build files and products
+**/ios/DerivedData/
+**/ios/build/
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Runner.xcworkspace/xcuserdata/
+**/ios/Runner.xcodeproj/xcuserdata/
+**/ios/Runner.xcodeproj/project.xcworkspace/
+# App.framework and engine are usually within the main build/ output for Flutter
+# **/ios/Flutter/App.framework
+# **/ios/Flutter/engine
+# flutter_assets are also part of the main build output
+# **/ios/Flutter/flutter_assets/
+
+# Android specific build files and products
+**/android/.gradle/
+**/android/gradle/ # Caches and wrappers if not using project's specified gradlew
+# **/android/gradlew # Consider if you want to enforce using flutter's bundled version
+# **/android/gradlew.bat # Same as above
+**/android/local.properties
+**/android/captures/ # Android Studio test screenshots/videos
+# Android build outputs (often covered by top-level /build/)
+# **/android/build/
+# **/android/app/build/
+# APKs, AABs, and intermediate files
+*.apk
+*.aab
+*.ap_
+# **/android/app/src/main/res/generated/ # Generated resources
+# **/android/app/src/main/assets/flutter_assets/ # Copied assets, covered by main build
+
+# macOS Desktop specific build files and products
+**/macos/build/
+**/macos/DerivedData/
+**/macos/.symlinks/
+**/macos/Flutter/ephemeral/
+**/macos/Pods/ # If you use native macOS pods
+**/macos/Runner.xcworkspace/xcuserdata/
+**/macos/Runner.xcodeproj/xcuserdata/
+
+# Linux Desktop specific build files and products
+**/linux/build/
+**/linux/flutter/ephemeral/
+
+# Windows Desktop specific build files and products
+**/windows/build/
+**/windows/flutter/ephemeral/
+# Example specific build output patterns for Windows:
+# **/windows/runner/Debug/
+# **/windows/runner/Release/
+# **/windows/runner/Profile/
+
+# Test & Coverage Reports
+coverage/
+lcov.info
+*.html # If coverage reports are in HTML at various locations
+*.xml # JUnit test reports etc.
+.test_results/
+**/test/coverage/ # Common output for dart test --coverage
+
+# Build Runner Generated Files
+# Common policy is to commit these to avoid requiring `build_runner` on every clone/pull.
+# If your policy is to NOT commit them, uncomment the lines below:
+# *.g.dart
+# *.freezed.dart
+# *.mocks.dart
+
+# Internationalization/Localization Generated Files
+# lib/generated_l10n.dart # Example if using Flutter's built-in l10n
+# .dart_tool/flutter_gen/ # If using flutter_gen for localization
+
+# Operating System Specific Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary and Backup Files
+*~
+*.swp
+*.swo
+*.tmp
+*.temp
+*.bak
+
+# Specific Tools & Services
+# Firebase (if using FlutterFire CLI and don't commit its generated files)
+# .flutterfire_cli
+# .firebaserc
+# firebase.json # Sometimes committed, sometimes not, depending on what's in it
+
+# Fastlane (if used for CI/CD)
+# fastlane/report.xml
+# fastlane/test_output/
+# fastlane/fastlane.log
+# fastlane/Lanefile # Usually committed
+
+# If using any other tools that generate local configuration or cache files, add them here.
+# Example:
+# .some_tool_cache/
+# some_tool.local.config
+
+# Make sure this file is kept up to date as new tools/files are introduced!
