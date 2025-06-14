@@ -15,6 +15,7 @@ class MockCounterCubit extends Mock implements CounterCubit {
   @override
   bool get isClosed => false;
 }
+
 class MockProfileBloc extends Mock implements ProfileBloc {
   @override
   Stream<ProfileState> get stream => Stream.value(state);
@@ -36,10 +37,18 @@ void main() {
     mockGoRouter = MockGoRouter();
 
     when(() => mockCounterCubit.state).thenReturn(0);
-    when(() => mockProfileBloc.state).thenReturn(const ProfileState(name: 'Test User'));
-    when(() => mockGoRouter.goNamed(any(), extra: any(named: 'extra'))).thenReturn({});
-    when(() => mockGoRouter.goNamed(any())).thenReturn({});
-    when(() => mockGoRouter.go(any())).thenReturn({});
+    when(
+      () => mockProfileBloc.state,
+    ).thenReturn(const ProfileState(name: 'Test User'));
+    when(() => mockCounterCubit.state).thenReturn(0);
+    when(
+      () => mockProfileBloc.state,
+    ).thenReturn(const ProfileState(name: 'Test User'));
+    when(
+      () => mockGoRouter.goNamed(any(), extra: any(named: 'extra')),
+    ).thenAnswer((_) {});
+    when(() => mockGoRouter.goNamed(any())).thenAnswer((_) {});
+    when(() => mockGoRouter.go(any())).thenAnswer((_) {});
   });
 
   Widget createWidgetUnderTest() {
@@ -70,7 +79,9 @@ void main() {
       expect(find.text('Analytics Overview'), findsOneWidget);
     });
 
-    testWidgets('increment button increases counter', (WidgetTester tester) async {
+    testWidgets('increment button increases counter', (
+      WidgetTester tester,
+    ) async {
       when(() => mockCounterCubit.increment()).thenAnswer((_) async {});
       when(() => mockCounterCubit.state).thenReturn(1);
 
@@ -84,7 +95,9 @@ void main() {
       expect(find.text('1'), findsOneWidget);
     });
 
-    testWidgets('decrement button decreases counter', (WidgetTester tester) async {
+    testWidgets('decrement button decreases counter', (
+      WidgetTester tester,
+    ) async {
       when(() => mockCounterCubit.decrement()).thenAnswer((_) async {});
       when(() => mockCounterCubit.state).thenReturn(-1);
 
@@ -98,9 +111,10 @@ void main() {
       expect(find.text('-1'), findsOneWidget);
     });
 
-    testWidgets('profile button navigates to profile screen', (WidgetTester tester) async {
-      when(() => mockGoRouter.goNamed('profile')).thenReturn({});
-
+    testWidgets('profile button navigates to profile screen', (
+      WidgetTester tester,
+    ) async {
+      when(() => mockGoRouter.goNamed('profile')).thenAnswer((_) {});
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
 
@@ -111,8 +125,8 @@ void main() {
     });
 
     testWidgets('action items are tappable', (WidgetTester tester) async {
-      when(() => mockGoRouter.go('/details/123')).thenReturn({});
-      when(() => mockGoRouter.go('/details/456')).thenReturn({});
+      when(() => mockGoRouter.go('/details/123')).thenAnswer((_) {});
+      when(() => mockGoRouter.go('/details/456')).thenAnswer((_) {});
 
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
@@ -126,4 +140,4 @@ void main() {
       verify(() => mockGoRouter.go('/details/456')).called(1);
     });
   });
-} 
+}

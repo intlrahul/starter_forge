@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:starter_forge/core/theme/app_theme.dart';
 
 /// This class provides test helpers to mock AppTheme for testing
 class AppThemeTestHelper {
@@ -75,11 +74,15 @@ class AppThemeTestHelper {
     return InputDecorationTheme(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8.0),
-        borderSide: BorderSide(color: colorScheme.outline.withOpacity(0.7)),
+        borderSide: BorderSide(
+          color: colorScheme.outline.withValues(alpha: 0.7),
+        ),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8.0),
-        borderSide: BorderSide(color: colorScheme.outline.withOpacity(0.7)),
+        borderSide: BorderSide(
+          color: colorScheme.outline.withValues(alpha: 0.7),
+        ),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8.0),
@@ -87,10 +90,10 @@ class AppThemeTestHelper {
       ),
       labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
       hintStyle: TextStyle(
-        color: colorScheme.onSurfaceVariant.withOpacity(0.7),
+        color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
       ),
       filled: true,
-      fillColor: colorScheme.surfaceContainerHighest.withOpacity(0.5),
+      fillColor: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
     );
   }
 
@@ -116,7 +119,9 @@ class AppThemeTestHelper {
       elevation: 0.5,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
-        side: BorderSide(color: colorScheme.outlineVariant.withOpacity(0.5)),
+        side: BorderSide(
+          color: colorScheme.outlineVariant.withValues(alpha: 0.5),
+        ),
       ),
       color: colorScheme.surface,
       margin: const EdgeInsets.symmetric(vertical: 8.0),

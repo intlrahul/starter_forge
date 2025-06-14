@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:starter_forge/core/widgets/loading_indicator.dart';
 import 'package:starter_forge/features/user_details/presentation/bloc/user_details_bloc.dart';
 import 'package:starter_forge/features/user_details/presentation/bloc/user_details_event.dart';
 import 'package:starter_forge/features/user_details/presentation/bloc/user_details_state.dart';
@@ -40,6 +39,8 @@ void main() {
           child: const UserDetailsScreen(detailsNumber: '123'),
         ),
       ),
+      // Add scaffoldMessengerKey to access SnackBar in tests
+      scaffoldMessengerKey: GlobalKey<ScaffoldMessengerState>(),
     );
   }
 
@@ -83,12 +84,29 @@ void main() {
       WidgetTester tester,
     ) async {
       // First pump widget with initial state
-      await tester.pumpWidget(createWidgetUnderTest());
+      final app = MaterialApp(
+        home: MultiBlocProvider(
+          providers: [
+            BlocProvider<UserDetailsBloc>.value(value: mockUserDetailsBloc),
+          ],
+          child: InheritedGoRouter(
+            goRouter: mockGoRouter,
+            child: const UserDetailsScreen(detailsNumber: '123'),
+          ),
+        ),
+        // Add scaffoldMessengerKey to access SnackBar in tests
+        scaffoldMessengerKey: GlobalKey<ScaffoldMessengerState>(),
+      );
+
+      await tester.pumpWidget(app);
       await tester.pump();
 
       // Then change the state to have an error message
       const errorMessage = 'Name and Email cannot be empty.';
-      final errorState = const UserDetailsState(errorMessage: errorMessage);
+      final errorState = const UserDetailsState(
+        errorMessage: errorMessage,
+        isSubmitting: false,
+      );
 
       // Setup state and stream to return error state
       when(() => mockUserDetailsBloc.state).thenReturn(errorState);
@@ -99,18 +117,39 @@ void main() {
       // Emit the state change
       mockUserDetailsBloc.emit(errorState);
 
-      // Pump to process the BlocListener
-      await tester.pumpAndSettle();
+      // Pump to process the BlocListener and show snackbar
+      await tester.pump(); // Process state change
+      await tester.pumpAndSettle(); // Make sure all animations complete
 
       // Verify the snackbar is shown with error message
-      expect(find.text(errorMessage), findsOneWidget);
+      expect(find.byType(SnackBar), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(SnackBar),
+          matching: find.text(errorMessage),
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('shows success snackbar and pops when submission succeeds', (
       WidgetTester tester,
     ) async {
       // First pump widget with initial state
-      await tester.pumpWidget(createWidgetUnderTest());
+      final app = MaterialApp(
+        home: MultiBlocProvider(
+          providers: [
+            BlocProvider<UserDetailsBloc>.value(value: mockUserDetailsBloc),
+          ],
+          child: InheritedGoRouter(
+            goRouter: mockGoRouter,
+            child: const UserDetailsScreen(detailsNumber: '123'),
+          ),
+        ),
+        // Add scaffoldMessengerKey to access SnackBar in tests
+        scaffoldMessengerKey: GlobalKey<ScaffoldMessengerState>(),
+      );
+      await tester.pumpWidget(app);
       await tester.pump();
 
       // Then change the state to success
@@ -127,10 +166,18 @@ void main() {
       mockUserDetailsBloc.emit(successState);
 
       // Pump to process the BlocListener and let snackbar appear
-      await tester.pumpAndSettle();
+      await tester.pump(); // Process state change
+      await tester.pumpAndSettle(); // Make sure all animations complete
 
       // Verify success message is shown
-      expect(find.text('User details saved successfully!'), findsOneWidget);
+      expect(find.byType(SnackBar), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(SnackBar),
+          matching: find.text('User details saved successfully!'),
+        ),
+        findsOneWidget,
+      );
 
       // Advance time to simulate the delay before pop
       await tester.pump(const Duration(milliseconds: 1200));
@@ -298,7 +345,21 @@ void main() {
       WidgetTester tester,
     ) async {
       // First pump with initial state
-      await tester.pumpWidget(createWidgetUnderTest());
+      final app = MaterialApp(
+        home: MultiBlocProvider(
+          providers: [
+            BlocProvider<UserDetailsBloc>.value(value: mockUserDetailsBloc),
+          ],
+          child: InheritedGoRouter(
+            goRouter: mockGoRouter,
+            child: const UserDetailsScreen(detailsNumber: '123'),
+          ),
+        ),
+        // Add scaffoldMessengerKey to access SnackBar in tests
+        scaffoldMessengerKey: GlobalKey<ScaffoldMessengerState>(),
+      );
+
+      await tester.pumpWidget(app);
       await tester.pump();
 
       // Test case 1: Error message with submitting = true (should not show error)
@@ -316,7 +377,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Error should not show while submitting
-      expect(find.text('Error message'), findsNothing);
+      expect(find.byType(SnackBar), findsNothing);
 
       // Test case 2: Error message with submitting = false (should show error)
       final nonSubmittingErrorState = const UserDetailsState(
@@ -333,7 +394,14 @@ void main() {
       await tester.pumpAndSettle();
 
       // Error should now be visible
-      expect(find.text('Error message'), findsOneWidget);
+      expect(find.byType(SnackBar), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(SnackBar),
+          matching: find.text('Error message'),
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('success snackbar has correct duration', (

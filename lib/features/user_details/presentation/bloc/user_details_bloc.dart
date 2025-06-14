@@ -46,7 +46,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
       );
 
       // Simulate network request or data saving
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 500));
 
       // Basic validation (you'd have more robust validation)
       if (state.name.isEmpty || state.email.isEmpty) {

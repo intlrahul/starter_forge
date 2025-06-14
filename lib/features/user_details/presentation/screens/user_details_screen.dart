@@ -48,7 +48,7 @@ class UserDetailsScreen extends StatelessWidget {
             );
             // Dismiss the page after a short delay to allow SnackBar to be seen
             Future.delayed(const Duration(milliseconds: 1200), () {
-              if (context.canPop()) {
+              if (context.mounted && context.canPop()) {
                 // Check if the page can be popped
                 context.pop(); // Pop the current route (UserDetailsScreen)
               }
