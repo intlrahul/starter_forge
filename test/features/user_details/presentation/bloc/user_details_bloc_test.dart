@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:bloc_test/bloc_test.dart';
 import 'package:starter_forge/features/user_details/presentation/bloc/user_details_bloc.dart';
 import 'package:starter_forge/features/user_details/presentation/bloc/user_details_event.dart';
 import 'package:starter_forge/features/user_details/presentation/bloc/user_details_state.dart';

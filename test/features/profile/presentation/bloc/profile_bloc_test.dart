@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:starter_forge/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:starter_forge/features/profile/presentation/bloc/profile_event.dart';
 import 'package:starter_forge/features/profile/presentation/bloc/profile_state.dart';
+import 'package:bloc_test/bloc_test.dart';
 
 void main() {
   group('ProfileBloc', () {

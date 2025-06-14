@@ -8,8 +8,21 @@ import 'package:starter_forge/features/dashboard/presentation/screens/home_scree
 import 'package:starter_forge/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:starter_forge/features/profile/presentation/bloc/profile_state.dart';
 
-class MockCounterCubit extends Mock implements CounterCubit {}
-class MockProfileBloc extends Mock implements ProfileBloc {}
+class MockCounterCubit extends Mock implements CounterCubit {
+  @override
+  Stream<int> get stream => Stream.value(state);
+
+  @override
+  bool get isClosed => false;
+}
+class MockProfileBloc extends Mock implements ProfileBloc {
+  @override
+  Stream<ProfileState> get stream => Stream.value(state);
+
+  @override
+  bool get isClosed => false;
+}
+
 class MockGoRouter extends Mock implements GoRouter {}
 
 void main() {
@@ -24,6 +37,9 @@ void main() {
 
     when(() => mockCounterCubit.state).thenReturn(0);
     when(() => mockProfileBloc.state).thenReturn(const ProfileState(name: 'Test User'));
+    when(() => mockGoRouter.goNamed(any(), extra: any(named: 'extra'))).thenReturn({});
+    when(() => mockGoRouter.goNamed(any())).thenReturn({});
+    when(() => mockGoRouter.go(any())).thenReturn({});
   });
 
   Widget createWidgetUnderTest() {
@@ -33,7 +49,10 @@ void main() {
           BlocProvider<CounterCubit>.value(value: mockCounterCubit),
           BlocProvider<ProfileBloc>.value(value: mockProfileBloc),
         ],
-        child: GoRouter.routerConfig(mockGoRouter, child: const HomeScreen()),
+        child: InheritedGoRouter(
+          goRouter: mockGoRouter,
+          child: const HomeScreen(),
+        ),
       ),
     );
   }
@@ -80,7 +99,7 @@ void main() {
     });
 
     testWidgets('profile button navigates to profile screen', (WidgetTester tester) async {
-      when(() => mockGoRouter.goNamed('profile')).thenAnswer((_) async {});
+      when(() => mockGoRouter.goNamed('profile')).thenReturn({});
 
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();
@@ -92,8 +111,8 @@ void main() {
     });
 
     testWidgets('action items are tappable', (WidgetTester tester) async {
-      when(() => mockGoRouter.go('/details/123')).thenAnswer((_) async {});
-      when(() => mockGoRouter.go('/details/456')).thenAnswer((_) async {});
+      when(() => mockGoRouter.go('/details/123')).thenReturn({});
+      when(() => mockGoRouter.go('/details/456')).thenReturn({});
 
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pumpAndSettle();

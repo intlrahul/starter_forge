@@ -22,6 +22,9 @@ void main() {
     when(() => mockUserDetailsBloc.state).thenReturn(
       const UserDetailsState(),
     );
+
+    // Mocking the stream to provide an empty stream or a stream with the initial state
+    when(() => mockUserDetailsBloc.stream).thenAnswer((_) => Stream.value(const UserDetailsState()));
   });
 
   Widget createWidgetUnderTest() {
@@ -30,7 +33,7 @@ void main() {
         providers: [
           BlocProvider<UserDetailsBloc>.value(value: mockUserDetailsBloc),
         ],
-        child: GoRouter.routerConfig(mockGoRouter, child: const UserDetailsScreen(detailsNumber: '123')),
+        child: const UserDetailsScreen(detailsNumber: '123'), // Use the actual screen directly
       ),
     );
   }
