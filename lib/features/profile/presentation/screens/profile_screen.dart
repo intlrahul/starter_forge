@@ -51,6 +51,7 @@ class _ProfileView extends StatelessWidget {
           return ListView(
             padding: const EdgeInsets.all(20.0),
             children: <Widget>[
+              _ThemeToggleCard(colorScheme: colorScheme, textTheme: textTheme),
               _ProfileHeader(
                 state: state,
                 colorScheme: colorScheme,
@@ -108,7 +109,7 @@ class _ProfileView extends StatelessWidget {
               const SizedBox(height: 24),
               _SectionTitle(textTheme: textTheme, title: 'Appearance'),
               const SizedBox(height: 8),
-              _ThemeToggleCard(colorScheme: colorScheme, textTheme: textTheme),
+
               // Removed isDarkMode from here, as it's fetched from ThemeBloc state
               const SizedBox(height: 24),
             ],

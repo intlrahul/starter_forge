@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:starter_forge/features/dashboard/presentation/counter/counter_cubit.dart';
 import 'package:starter_forge/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:starter_forge/features/profile/presentation/bloc/profile_event.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -39,6 +40,9 @@ class _HomeScreenContent extends StatelessWidget {
               tooltip: 'Profile',
               onPressed: () {
                 context.goNamed('profile'); // Navigate to profile screen
+                context.read<ProfileBloc>().add(
+                  LoadProfileData(),
+                ); // Load profile data
               },
             ),
           ),

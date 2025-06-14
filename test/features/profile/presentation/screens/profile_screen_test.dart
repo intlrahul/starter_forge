@@ -5,6 +5,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:starter_forge/core/theme/theme_bloc/theme_bloc.dart';
 import 'package:starter_forge/core/theme/theme_bloc/theme_event.dart';
 import 'package:starter_forge/core/theme/theme_bloc/theme_state.dart';
+import 'package:starter_forge/core/widgets/loading_indicator.dart';
 import 'package:starter_forge/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:starter_forge/features/profile/presentation/bloc/profile_state.dart';
 import 'package:starter_forge/features/profile/presentation/screens/profile_screen.dart';
@@ -74,8 +75,8 @@ void main() {
       // Don't use pumpAndSettle as it might time out waiting for animations
       await tester.pump();
 
-      // Check for CircularProgressIndicator directly instead of AppLoader
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      // Fix: Check for AppLoader instead of CircularProgressIndicator directly
+      expect(find.byType(AppLoader), findsOneWidget);
     });
 
     testWidgets('shows error snackbar when status is failure', (
@@ -103,7 +104,6 @@ void main() {
 
       // Pump to allow the BlocListener to process the state change
       await tester.pump();
-      await tester.pump(); // Additional pump for the snackbar animation
 
       // Verify the error message is displayed
       expect(find.text(errorMessage), findsOneWidget);
@@ -129,9 +129,9 @@ void main() {
       await tester.pump();
 
       // Find text by matching exact instances
-      expect(find.text('John Doe', findRichText: true), findsOneWidget);
-      expect(find.text('john@example.com', findRichText: true), findsOneWidget);
-      expect(find.text('Test bio', findRichText: true), findsOneWidget);
+      expect(find.text('John Doe'), findsNWidgets(2));
+      expect(find.text('john@example.com'), findsNWidgets(2));
+      expect(find.text('Test bio'), findsOneWidget);
       expect(find.text('Personal Information'), findsOneWidget);
       expect(find.text('About Me'), findsOneWidget);
       expect(find.text('Appearance'), findsOneWidget);
@@ -160,17 +160,20 @@ void main() {
     testWidgets('theme toggle changes theme mode', (WidgetTester tester) async {
       final successState = ProfileState(status: ProfileStatus.success);
       when(() => mockProfileBloc.state).thenReturn(successState);
+
       when(
         () => mockProfileBloc.stream,
       ).thenAnswer((_) => Stream.value(successState));
+
+      when(() => mockProfileBloc.state).thenReturn(successState);
 
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pump();
 
       // Find the dark theme segment button without relying on tap
-      final darkSegment = find.ancestor(
-        of: find.text('Dark'),
-        matching: find.byType(ButtonSegment<ThemeMode>),
+      final darkSegment = find.descendant(
+        of: find.byType(SegmentedButton<ThemeMode>),
+        matching: find.text('Dark'),
       );
 
       // Check if it exists
