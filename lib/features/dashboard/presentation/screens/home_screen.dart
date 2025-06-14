@@ -9,7 +9,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Assuming CounterCubit is provided higher up the tree
     return const _HomeScreenContent();
   }
 }
@@ -48,24 +47,22 @@ class _HomeScreenContent extends StatelessWidget {
       body: SafeArea(
         // Ensures content isn't obscured by notches or system UI
         child: ListView(
-          // Use ListView for scrollability if content grows
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
           children: <Widget>[
-            _buildGreeting(context, textTheme), // Placeholder name
+            _Greeting(textTheme: textTheme),
+            // Placeholder name
             const SizedBox(height: 24),
-            _buildCounterCard(context, textTheme, colorScheme),
+            _CounterCard(textTheme: textTheme, colorScheme: colorScheme),
             const SizedBox(height: 24),
-            _buildSectionTitle(context, textTheme, 'Quick Actions'),
+            _SectionTitle(textTheme: textTheme, title: 'Quick Actions'),
             const SizedBox(height: 12),
-            _buildActionItem(
-              context,
+            _ActionItem(
               icon: Icons.article_outlined,
               title: 'View Report #123',
               subtitle: 'Access details and user information',
               onTap: () => context.go('/details/123'),
             ),
-            _buildActionItem(
-              context,
+            _ActionItem(
               icon: Icons.description_outlined,
               title: 'Manage Document #456',
               subtitle: 'Review and update user data',
@@ -74,7 +71,7 @@ class _HomeScreenContent extends StatelessWidget {
             // Add more ActionItems or other sections like charts, recent activity, etc.
             // Example:
             const SizedBox(height: 24),
-            _buildSectionTitle(context, textTheme, 'Analytics Overview'),
+            _SectionTitle(textTheme: textTheme, title: 'Analytics Overview'),
             const SizedBox(height: 12),
             Card(
               elevation: 0,
@@ -89,7 +86,8 @@ class _HomeScreenContent extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 80), // Space for FAB
+            const SizedBox(height: 80),
+            // Space for FAB
           ],
         ),
       ),
@@ -104,8 +102,8 @@ class _HomeScreenContent extends StatelessWidget {
                 onPressed: () => context.read<CounterCubit>().decrement(),
                 icon: const Icon(Icons.remove_circle_outline),
                 label: const Text('Decrease'),
-                backgroundColor:
-                    colorScheme.surfaceContainerHighest, // M3 style
+                backgroundColor: colorScheme.surfaceContainerHighest,
+                // M3 style
                 foregroundColor: colorScheme.primary,
                 elevation: 1.0,
               ),
@@ -117,7 +115,8 @@ class _HomeScreenContent extends StatelessWidget {
                 onPressed: () => context.read<CounterCubit>().increment(),
                 icon: const Icon(Icons.add_circle_outline),
                 label: const Text('Increase'),
-                backgroundColor: colorScheme.primary, // M3 style
+                backgroundColor: colorScheme.primary,
+                // M3 style
                 foregroundColor: colorScheme.onPrimary,
                 elevation: 1.0,
               ),
@@ -127,8 +126,15 @@ class _HomeScreenContent extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildGreeting(BuildContext context, TextTheme textTheme) {
+class _Greeting extends StatelessWidget {
+  const _Greeting({required this.textTheme});
+
+  final TextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
     final userName = context.watch<ProfileBloc>().state.name;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,12 +155,16 @@ class _HomeScreenContent extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _buildCounterCard(
-    BuildContext context,
-    TextTheme textTheme,
-    ColorScheme colorScheme,
-  ) {
+class _CounterCard extends StatelessWidget {
+  const _CounterCard({required this.textTheme, required this.colorScheme});
+
+  final TextTheme textTheme;
+  final ColorScheme colorScheme;
+
+  @override
+  Widget build(BuildContext context) {
     return Card(
       elevation: 0.5, // Subtle elevation
       child: Padding(
@@ -196,12 +206,16 @@ class _HomeScreenContent extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildSectionTitle(
-    BuildContext context,
-    TextTheme textTheme,
-    String title,
-  ) {
+class _SectionTitle extends StatelessWidget {
+  const _SectionTitle({required this.textTheme, required this.title});
+
+  final TextTheme textTheme;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, bottom: 4.0), // Adjust as needed
       child: Text(
@@ -213,14 +227,23 @@ class _HomeScreenContent extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildActionItem(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required String subtitle,
-    required VoidCallback onTap,
-  }) {
+class _ActionItem extends StatelessWidget {
+  const _ActionItem({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
     return Card(
       elevation: 0, // Flat design for list items
       margin: const EdgeInsets.symmetric(vertical: 6.0),

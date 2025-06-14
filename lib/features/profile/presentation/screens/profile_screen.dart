@@ -48,48 +48,46 @@ class _ProfileView extends StatelessWidget {
               state.status == ProfileStatus.initial) {
             return const Center(child: AppLoader());
           }
-          // ... (rest of the ProfileBloc builder logic remains the same, ensure to use ProfileBlocState.ProfileState where needed)
-
-          // Profile Success State
           return ListView(
             padding: const EdgeInsets.all(20.0),
             children: <Widget>[
-              // ... (_buildProfileHeader, _buildSectionTitle, _buildInfoCard, _buildInfoRow methods remain the same)
-              _buildProfileHeader(
-                context,
-                state,
-                colorScheme,
-                textTheme,
-              ), // state is ProfileBlocState.ProfileState
+              _ProfileHeader(
+                state: state,
+                colorScheme: colorScheme,
+                textTheme: textTheme,
+              ),
+              // state is ProfileBlocState.ProfileState
               const SizedBox(height: 24),
-              _buildSectionTitle(textTheme, 'Personal Information'),
+              _SectionTitle(
+                textTheme: textTheme,
+                title: 'Personal Information',
+              ),
               const SizedBox(height: 8),
-              _buildInfoCard(
-                colorScheme,
-                isDarkMode,
+              _InfoCard(
+                isDarkMode: isDarkMode,
+                colorScheme: colorScheme,
                 children: [
-                  _buildInfoRow(
-                    context,
-                    Icons.person_outline,
-                    'Name',
-                    state.name,
-                    textTheme,
+                  _InfoRow(
+                    icon: Icons.person_outline,
+                    label: 'Name',
+                    value: state.name,
+                    textTheme: textTheme,
                   ),
-                  _buildInfoRow(
-                    context,
-                    Icons.email_outlined,
-                    'Email',
-                    state.email,
-                    textTheme,
+
+                  _InfoRow(
+                    icon: Icons.email_outlined,
+                    label: 'Email',
+                    value: state.email,
+                    textTheme: textTheme,
                   ),
                 ],
               ),
               const SizedBox(height: 24),
-              _buildSectionTitle(textTheme, 'About Me'),
+              _SectionTitle(textTheme: textTheme, title: 'About Me'),
               const SizedBox(height: 8),
-              _buildInfoCard(
-                colorScheme,
-                isDarkMode,
+              _InfoCard(
+                isDarkMode: isDarkMode,
+                colorScheme: colorScheme,
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -108,13 +106,10 @@ class _ProfileView extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 24),
-              _buildSectionTitle(textTheme, 'Appearance'),
+              _SectionTitle(textTheme: textTheme, title: 'Appearance'),
               const SizedBox(height: 8),
-              _buildThemeToggleCard(
-                context,
-                colorScheme,
-                textTheme,
-              ), // Removed isDarkMode from here, as it's fetched from ThemeBloc state
+              _ThemeToggleCard(colorScheme: colorScheme, textTheme: textTheme),
+              // Removed isDarkMode from here, as it's fetched from ThemeBloc state
               const SizedBox(height: 24),
             ],
           );
@@ -122,16 +117,15 @@ class _ProfileView extends StatelessWidget {
       ),
     );
   }
+}
 
-  // ... _buildProfileHeader, _buildSectionTitle, _buildInfoCard, _buildInfoRow methods remain the same
+class _ThemeToggleCard extends StatelessWidget {
+  const _ThemeToggleCard({required this.colorScheme, required this.textTheme});
+  final ColorScheme colorScheme;
+  final TextTheme textTheme;
 
-  Widget _buildThemeToggleCard(
-    BuildContext context,
-    ColorScheme colorScheme,
-    TextTheme textTheme,
-  ) {
-    // Removed isDarkMode parameter
-    // Use BlocBuilder or context.watch to get the current ThemeBloc state for selected segment
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
       // Use aliased state
       builder: (context, themeState) {
@@ -197,17 +191,21 @@ class _ProfileView extends StatelessWidget {
       },
     );
   }
-  // Helper methods for _ProfileView (_buildProfileHeader, etc.)
-  // These should be part of the _ProfileView class or passed `context` if they need it.
-  // For brevity, I'll keep them as they were, assuming they are part of _ProfileView or refactored.
-  // Make sure they use `ProfileBlocState.ProfileState` if they access the profile state.
+}
 
-  Widget _buildProfileHeader(
-    BuildContext context,
-    ProfileState state,
-    ColorScheme colorScheme,
-    TextTheme textTheme,
-  ) {
+class _ProfileHeader extends StatelessWidget {
+  const _ProfileHeader({
+    required this.state,
+    required this.colorScheme,
+    required this.textTheme,
+  });
+
+  final ProfileState state;
+  final ColorScheme colorScheme;
+  final TextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         CircleAvatar(
@@ -248,19 +246,36 @@ class _ProfileView extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _buildSectionTitle(TextTheme textTheme, String title) {
+class _SectionTitle extends StatelessWidget {
+  const _SectionTitle({required this.title, required this.textTheme});
+
+  final String title;
+  final TextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
     return Text(
       title,
       style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
     );
   }
+}
 
-  Widget _buildInfoCard(
-    ColorScheme colorScheme,
-    bool isDarkMode, {
-    required List<Widget> children,
-  }) {
+class _InfoCard extends StatelessWidget {
+  const _InfoCard({
+    required this.isDarkMode,
+    required this.colorScheme,
+    required this.children,
+  });
+
+  final bool isDarkMode;
+  final ColorScheme colorScheme;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -275,15 +290,24 @@ class _ProfileView extends StatelessWidget {
       child: Column(children: children),
     );
   }
+}
 
-  Widget _buildInfoRow(
-    BuildContext context,
-    IconData icon,
-    String label,
-    String value,
-    TextTheme textTheme, {
-    bool isSensitive = false,
-  }) {
+class _InfoRow extends StatelessWidget {
+  const _InfoRow({
+    required this.icon,
+    required this.label,
+    required this.value,
+    required this.textTheme,
+  });
+
+  final IconData icon;
+  final String label;
+  final String value;
+  final TextTheme textTheme;
+  final bool isSensitive = false;
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
       child: Row(
