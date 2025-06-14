@@ -1,3 +1,4 @@
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:starter_forge/features/dashboard/presentation/counter/counter_cubit.dart';
 
@@ -42,19 +43,17 @@ void main() {
       expect(counterCubit.state, equals(1));
     });
 
-    test('cubit emits states in correct order', () {
-      final expectedStates = [0, 1, 2, 1, 0, -1];
-      final actualStates = <int>[];
-
-      counterCubit.stream.listen(actualStates.add);
-
-      counterCubit.increment(); // 1
-      counterCubit.increment(); // 2
-      counterCubit.decrement(); // 1
-      counterCubit.decrement(); // 0
-      counterCubit.decrement(); // -1
-
-      expect(actualStates, equals(expectedStates));
-    });
+    blocTest<CounterCubit, int>(
+      'cubit emits states in correct order',
+      build: CounterCubit.new,
+      act: (cubit) => {
+        cubit.increment(), // 1
+        cubit.increment(), // 2
+        cubit.decrement(), // 1
+        cubit.decrement(), // 0
+        cubit.decrement(), // -1
+      },
+      expect: () => [1, 2, 1, 0, -1],
+    );
   });
-} 
+}

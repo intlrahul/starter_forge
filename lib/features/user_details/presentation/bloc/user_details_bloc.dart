@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:starter_forge/features/user_details/presentation/bloc/user_details_event.dart';
 import 'package:starter_forge/features/user_details/presentation/bloc/user_details_state.dart';
@@ -67,7 +69,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
       }
 
       // Success
-      print(
+      log(
         'User Details Submitted: Name: ${state.name}, Email: ${state.email}, For ID: ${state.userId}',
       );
       emit(state.copyWith(isSubmitting: false, isSuccess: true));

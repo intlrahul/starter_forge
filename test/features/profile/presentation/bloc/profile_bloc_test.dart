@@ -1,8 +1,8 @@
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:starter_forge/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:starter_forge/features/profile/presentation/bloc/profile_event.dart';
 import 'package:starter_forge/features/profile/presentation/bloc/profile_state.dart';
-import 'package:bloc_test/bloc_test.dart';
 
 void main() {
   group('ProfileBloc', () {
@@ -45,8 +45,10 @@ void main() {
           status: ProfileStatus.success,
           name: 'Rahul Singh',
           email: 'singhrahul.cs@gmail.com',
-          bio: 'Flutter enthusiast & coffee lover. Building amazing apps one widget at a time. Passionate about clean code and great user experiences.',
-          profileImageUrl: 'https://media.licdn.com/dms/image/v2/D5603AQEt0ybToZGGuw/profile-displayphoto-shrink_400_400/B56Zbt8qBkG4Ak-/0/1747748823820?e=1754524800&v=beta&t=nXoQedxVXJF8mmYpcfumSS0fV95_3JetvFYdt2R2KEc',
+          bio:
+              'Flutter enthusiast & coffee lover. Building amazing apps one widget at a time. Passionate about clean code and great user experiences.',
+          profileImageUrl:
+              'https://media.licdn.com/dms/image/v2/D5603AQEt0ybToZGGuw/profile-displayphoto-shrink_400_400/B56Zbt8qBkG4Ak-/0/1747748823820?e=1754524800&v=beta&t=nXoQedxVXJF8mmYpcfumSS0fV95_3JetvFYdt2R2KEc',
         ),
       ],
       wait: const Duration(milliseconds: 800), // Wait for the simulated delay
@@ -54,7 +56,7 @@ void main() {
 
     test('state copyWith works correctly', () {
       const initialState = ProfileState();
-      
+
       final newState = initialState.copyWith(
         status: ProfileStatus.success,
         name: 'Test User',
@@ -71,15 +73,16 @@ void main() {
       expect(newState.errorMessage, isNull);
     });
 
-    test('state copyWith clears error message when clearErrorMessage is true', () {
-      const initialState = ProfileState(errorMessage: 'Error');
-      
-      final newState = initialState.copyWith(
-        clearErrorMessage: true,
-      );
+    test(
+      'state copyWith clears error message when clearErrorMessage is true',
+      () {
+        const initialState = ProfileState(errorMessage: 'Error');
 
-      expect(newState.errorMessage, isNull);
-    });
+        final newState = initialState.copyWith(clearErrorMessage: true);
+
+        expect(newState.errorMessage, isNull);
+      },
+    );
 
     test('state props contains all fields', () {
       const state = ProfileState(
@@ -104,4 +107,4 @@ void main() {
       );
     });
   });
-} 
+}

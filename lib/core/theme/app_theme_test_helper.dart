@@ -75,15 +75,11 @@ class AppThemeTestHelper {
     return InputDecorationTheme(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8.0),
-        borderSide: BorderSide(
-          color: colorScheme.outline.withOpacity(0.7),
-        ),
+        borderSide: BorderSide(color: colorScheme.outline.withOpacity(0.7)),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8.0),
-        borderSide: BorderSide(
-          color: colorScheme.outline.withOpacity(0.7),
-        ),
+        borderSide: BorderSide(color: colorScheme.outline.withOpacity(0.7)),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8.0),
@@ -94,7 +90,7 @@ class AppThemeTestHelper {
         color: colorScheme.onSurfaceVariant.withOpacity(0.7),
       ),
       filled: true,
-      fillColor: colorScheme.surfaceVariant.withOpacity(0.5),
+      fillColor: colorScheme.surfaceContainerHighest.withOpacity(0.5),
     );
   }
 
@@ -105,10 +101,7 @@ class AppThemeTestHelper {
         backgroundColor: colorScheme.primary,
         foregroundColor: colorScheme.onPrimary,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-        textStyle: const TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.w600,
-        ),
+        textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
@@ -123,9 +116,7 @@ class AppThemeTestHelper {
       elevation: 0.5,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
-        side: BorderSide(
-          color: colorScheme.outlineVariant.withOpacity(0.5),
-        ),
+        side: BorderSide(color: colorScheme.outlineVariant.withOpacity(0.5)),
       ),
       color: colorScheme.surface,
       margin: const EdgeInsets.symmetric(vertical: 8.0),

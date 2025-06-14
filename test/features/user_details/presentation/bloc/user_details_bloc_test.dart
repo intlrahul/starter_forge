@@ -1,5 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:starter_forge/features/user_details/presentation/bloc/user_details_bloc.dart';
 import 'package:starter_forge/features/user_details/presentation/bloc/user_details_event.dart';
 import 'package:starter_forge/features/user_details/presentation/bloc/user_details_state.dart';
@@ -183,7 +183,7 @@ void main() {
 
     test('state copyWith works correctly', () {
       const initialState = UserDetailsState();
-      
+
       final newState = initialState.copyWith(
         userId: '123',
         name: 'John Doe',
@@ -200,15 +200,16 @@ void main() {
       expect(newState.errorMessage, isNull);
     });
 
-    test('state copyWith clears error message when clearErrorMessage is true', () {
-      const initialState = UserDetailsState(errorMessage: 'Error');
-      
-      final newState = initialState.copyWith(
-        clearErrorMessage: true,
-      );
+    test(
+      'state copyWith clears error message when clearErrorMessage is true',
+      () {
+        const initialState = UserDetailsState(errorMessage: 'Error');
 
-      expect(newState.errorMessage, isNull);
-    });
+        final newState = initialState.copyWith(clearErrorMessage: true);
+
+        expect(newState.errorMessage, isNull);
+      },
+    );
 
     test('state props contains all fields', () {
       const state = UserDetailsState(
@@ -222,15 +223,8 @@ void main() {
 
       expect(
         state.props,
-        equals([
-          '123',
-          'John Doe',
-          'john@example.com',
-          true,
-          true,
-          'Error',
-        ]),
+        equals(['123', 'John Doe', 'john@example.com', true, true, 'Error']),
       );
     });
   });
-} 
+}
