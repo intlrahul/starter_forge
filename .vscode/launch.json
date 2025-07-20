@@ -6,21 +6,59 @@
     "configurations": [
         {
             "name": "starter_forge",
-            "request": "launch",
             "type": "dart",
+            "request": "launch",
             "program": "lib/app/main.dart"
         },
         {
             "name": "starter_forge (profile mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "program": "lib/app/main.dart"
         },
         {
             "name": "starter_forge (release mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "program": "lib/app/main.dart"
+        },
+        {
+            "name": "starter_forge (dev environment)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/app/main.dart",
+            "args": [
+                "--dart-define=ENVIRONMENT=dev",
+                "--dart-define=BASE_URL=https://api-dev.example.com",
+                "--dart-define=ENABLE_ANALYTICS=false",
+                "--dart-define=ENABLE_LOGGING=true"
+            ]
+        },
+        {
+            "name": "starter_forge (staging environment)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/app/main.dart",
+            "args": [
+                "--dart-define=ENVIRONMENT=staging",
+                "--dart-define=BASE_URL=https://api-staging.example.com",
+                "--dart-define=ENABLE_ANALYTICS=true",
+                "--dart-define=ENABLE_LOGGING=true"
+            ]
+        },
+        {
+            "name": "starter_forge (production environment)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/app/main.dart",
+            "args": [
+                "--dart-define=ENVIRONMENT=prod",
+                "--dart-define=BASE_URL=https://api.example.com",
+                "--dart-define=ENABLE_ANALYTICS=true",
+                "--dart-define=ENABLE_LOGGING=false"
+            ]
         }
     ]
 }
