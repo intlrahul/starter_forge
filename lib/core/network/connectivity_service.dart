@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:injectable/injectable.dart';
 import 'package:starter_forge/core/logging/app_logger.dart';
 
 /// Service for monitoring network connectivity
+@lazySingleton
 class ConnectivityService {
-  factory ConnectivityService() => _instance;
-
-  ConnectivityService._internal();
-  static final ConnectivityService _instance = ConnectivityService._internal();
+  ConnectivityService();
 
   final Connectivity _connectivity = Connectivity();
   final StreamController<bool> _connectionController =

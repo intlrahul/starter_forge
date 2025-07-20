@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:starter_forge/core/config/app_config.dart';
 import 'package:starter_forge/core/logging/app_logger.dart';
 
@@ -26,6 +27,7 @@ abstract class AnalyticsService {
 }
 
 /// Default analytics implementation (logs to console/file)
+@Injectable(as: AnalyticsService)
 class DefaultAnalyticsService implements AnalyticsService {
   String? _userId;
   final Map<String, dynamic> _userProperties = {};
@@ -93,22 +95,11 @@ class DefaultAnalyticsService implements AnalyticsService {
 }
 
 /// Analytics manager that can switch between different implementations
+@lazySingleton
 class AnalyticsManager {
-  factory AnalyticsManager() => _instance;
+  AnalyticsManager(this._service);
 
-  AnalyticsManager._internal() {
-    // Initialize with default service
-    _service = DefaultAnalyticsService();
-  }
-  static final AnalyticsManager _instance = AnalyticsManager._internal();
-
-  late AnalyticsService _service;
-
-  /// Set the analytics service implementation
-  void setService(AnalyticsService service) {
-    _service = service;
-    AppLogger.info('Analytics service updated: ${service.runtimeType}');
-  }
+  final AnalyticsService _service;
 
   /// Track an event
   void trackEvent(String eventName, {Map<String, dynamic>? parameters}) {

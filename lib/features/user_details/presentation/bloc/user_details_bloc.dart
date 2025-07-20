@@ -1,9 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:starter_forge/features/user_details/presentation/bloc/user_details_event.dart';
 import 'package:starter_forge/features/user_details/presentation/bloc/user_details_state.dart';
 
+@injectable
 class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   UserDetailsBloc() : super(const UserDetailsState()) {
     on<LoadUserDetails>((event, emit) {

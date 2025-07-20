@@ -1,19 +1,17 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:starter_forge/core/config/app_config.dart';
 import 'package:starter_forge/core/logging/app_logger.dart';
 import 'package:starter_forge/core/network/interceptors/auth_interceptor.dart';
 import 'package:starter_forge/core/network/interceptors/error_interceptor.dart';
 import 'package:starter_forge/core/network/interceptors/logging_interceptor.dart';
 
-/// Singleton HTTP client for the application
+/// HTTP client for the application
+@lazySingleton
 class DioClient {
-  factory DioClient() => _instance;
-
-  DioClient._internal() {
+  DioClient() {
     _dio = _createDio();
   }
-
-  static final DioClient _instance = DioClient._internal();
 
   late final Dio _dio;
 

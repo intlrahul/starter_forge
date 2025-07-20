@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'theme_event.dart';
@@ -8,6 +9,7 @@ import 'theme_state.dart';
 const String _themePrefsKey =
     'appThemeModeBloc'; // Use a different key if you ran the counter version
 
+@injectable
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   ThemeBloc() : super(ThemeState.initial()) {
     on<LoadTheme>(_onLoadTheme);

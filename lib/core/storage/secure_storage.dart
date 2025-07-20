@@ -1,7 +1,9 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:injectable/injectable.dart';
 import 'package:starter_forge/core/logging/app_logger.dart';
 
 /// Secure storage service for sensitive data like tokens
+@lazySingleton
 class SecureStorage {
   static const _storage = FlutterSecureStorage(
     aOptions: AndroidOptions(encryptedSharedPreferences: true),
