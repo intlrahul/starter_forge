@@ -8,7 +8,7 @@ A **production-ready Flutter starter template** designed to provide a comprehens
 - **Clean Architecture**: Complete separation with data, domain, and presentation layers
 - **Feature-First Organization**: Modular structure for unlimited scalability
 - **BLoC State Management**: Predictable state management with `flutter_bloc`
-- **Dependency Injection**: Service locator pattern using `get_it`
+- **Dependency Injection**: Clean GetIt + injectable pattern
 - **Result Pattern**: Type-safe error handling with Freezed
 - **Repository Pattern**: Abstracted data access layer
 
@@ -108,7 +108,7 @@ flutter run --dart-define=ENVIRONMENT=prod --dart-define=BASE_URL=https://api.ex
 lib/
 ├── app/                          # App-level configuration
 │   ├── router/                   # Navigation setup
-│   └── service_locator.dart      # Dependency injection
+│   └── injection.dart            # Dependency injection configuration
 ├── core/                         # Shared core functionalities
 │   ├── analytics/                # Analytics service
 │   ├── config/                   # Environment configuration
@@ -149,7 +149,7 @@ open coverage/html/index.html
 
 ### **Core Dependencies**
 - `flutter_bloc` - State management
-- `get_it` - Dependency injection
+- `get_it` - Dependency injection with injectable code generation
 - `go_router` - Declarative routing
 - `dio` - HTTP client
 - `hive` - Local storage
@@ -288,3 +288,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Built with ❤️ for the Flutter community**
 
 *This starter template provides everything you need to build production-ready Flutter applications with clean architecture, comprehensive testing, and modern development practices.*
+---
+
+## 📚 Documentation
+
+For detailed refactoring guides and architectural decisions, see [docs/refactoring/](docs/refactoring/).
