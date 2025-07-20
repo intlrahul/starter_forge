@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:starter_forge/app/service_locator.dart';
+import 'package:starter_forge/app/injection.dart';
 import 'package:starter_forge/features/dashboard/presentation/counter/counter_cubit.dart';
 import 'package:starter_forge/features/dashboard/presentation/screens/home_screen.dart';
 import 'package:starter_forge/features/profile/presentation/screens/profile_screen.dart';
@@ -14,7 +14,7 @@ List<RouteBase> mainRoutes = [
     path: '/',
     builder: (BuildContext context, GoRouterState state) {
       return BlocProvider(
-        create: (context) => sl<CounterCubit>(),
+        create: (context) => getIt<CounterCubit>(),
         child: const HomeScreen(),
       );
     },
@@ -29,7 +29,7 @@ List<RouteBase> mainRoutes = [
               state.pathParameters['detailsNumber'] ?? '0';
           return BlocProvider(
             create: (context) =>
-                sl<UserDetailsBloc>()..add(LoadUserDetails(detailsNum)),
+                getIt<UserDetailsBloc>()..add(LoadUserDetails(detailsNum)),
             child: UserDetailsScreen(detailsNumber: detailsNum),
           );
         },

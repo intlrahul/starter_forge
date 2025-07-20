@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:starter_forge/app/injection.dart';
 import 'package:starter_forge/app/router/app_router.dart';
-import 'package:starter_forge/app/service_locator.dart';
 import 'package:starter_forge/core/analytics/analytics_service.dart';
 import 'package:starter_forge/core/config/app_config.dart';
 import 'package:starter_forge/core/network/connectivity_service.dart';
@@ -21,14 +21,14 @@ void main() async {
   // Initialize storage
   await LocalStorage.init();
   
-  // Setup service locator
-  setupServiceLocator();
+  // Configure dependency injection
+  configureDependencies();
   
   // Initialize connectivity service
-  await sl<ConnectivityService>().initialize();
+  await getIt<ConnectivityService>().initialize();
   
   // Track app launch
-  sl<AnalyticsManager>().trackAppLaunch();
+  getIt<AnalyticsManager>().trackAppLaunch();
   
   runApp(const StarterForgeApp());
 }
@@ -40,9 +40,9 @@ class StarterForgeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => sl<ThemeBloc>()),
+        BlocProvider(create: (context) => getIt<ThemeBloc>()),
         BlocProvider(
-          create: (context) => sl<ProfileBloc>()..add(LoadProfileData()),
+          create: (context) => getIt<ProfileBloc>()..add(LoadProfileData()),
         ),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
