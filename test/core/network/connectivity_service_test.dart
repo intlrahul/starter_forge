@@ -1,11 +1,17 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:starter_forge/core/network/connectivity_service.dart';
 
 void main() {
   group('ConnectivityService', () {
     late ConnectivityService connectivityService;
+
+    setUpAll(() {
+      // Initialize Flutter bindings for platform channel tests
+      TestWidgetsFlutterBinding.ensureInitialized();
+    });
 
     setUp(() {
       connectivityService = ConnectivityService();
