@@ -120,6 +120,8 @@ lcov.info
 *.g.dart
 *.freezed.dart
 *.mocks.dart
+# Injectable generated files
+*.config.dart
 
 # Internationalization/Localization Generated Files
 lib/generated_l10n.dart
